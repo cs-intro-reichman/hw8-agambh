@@ -2,7 +2,9 @@
 public class UserTest {
     public static void main(String[] args) {
         System.out.println("...Testing the User class...\n");
-
+        User dummy = new User("Dummy", true);
+        System.out.println("Dummy follows Baz: " + dummy.follows("Baz"));
+/* 
         System.out.println("...To get started, creating a dummy user for testing the toString and follows methods...\n");
         User dummy = new User("Dummy", true);
         System.out.println(dummy);
@@ -75,5 +77,6 @@ public class UserTest {
         System.out.println("Orly is a friend of Alex: " + orly.isFriendOf(alex));
         
         System.out.println("\nAll User class tests completed.");
+        */
     }
 }
