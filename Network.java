@@ -65,20 +65,24 @@ public class Network {
     public String recommendWhoToFollow(String name) {
         int max = -1;
         String recUseString = "";
-        for (int i=0; i< userCount; i++){
-            if(users[i].getfCount()>max && !users[i].getName().equals(name)){
-                max = users[i].getfCount();
+        if(getUser(name) == null)
+            return "";
+        for (int i=0; i < userCount; i++){
+            if(users[i].getName().equals(name))
+                continue ;
+            if(users[i].countMutual(getUser(name)) > max){
+                max = users[i].countMutual(getUser(name));
                 recUseString= ""+ users[i].getName();
             }
-
         }
-
         return recUseString;
     }
 
     /** Computes and returns the name of the most popular user in this network: 
      *  The user who appears the most in the follow lists of all the users. */
     public String mostPopularUser() {
+        if(userCount == 0)
+            return null ;
         int max = -1;
         String popular = "";
         for(int i = 0 ; i < userCount ; i++){
@@ -87,6 +91,7 @@ public class Network {
                 popular = "" +users[i].getName();
             } 
         }
+        
         return popular;
     }
 
