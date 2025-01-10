@@ -41,7 +41,7 @@ public class Network {
     *  If the given name is already a user in this network, does nothing and returns false;
     *  Otherwise, creates a new user with the given name, adds the user to this network, and returns true. */
     public boolean addUser(String name) {
-        if(users.length > userCount && getUser(name) == null){
+        if(users.length > userCount && getUser(name) == null ){
             users[userCount] = new User(name);
             userCount++ ;
             return true;
@@ -53,7 +53,7 @@ public class Network {
      *  If any of the two names is not a user in this network,
      *  or if the "follows" addition failed for some reason, returns false. */
     public boolean addFollowee(String name1, String name2) {
-        if (getUser(name1) != null && getUser(name2) != null){
+        if (name1 != null && name2 != null && getUser(name1) != null && getUser(name2) != null  ){
             if(getUser(name1).addFollowee(name2) == true)
                 return true ;
         }
@@ -63,12 +63,12 @@ public class Network {
     /** For the user with the given name, recommends another user to follow. The recommended user is
      *  the user that has the maximal mutual number of followees as the user with the given name. */
     public String recommendWhoToFollow(String name) {
-        int max=0;
+        int max = -1;
         String recUseString = "";
         for (int i=0; i< userCount; i++){
             if(users[i].getfCount()>max && !users[i].getName().equals(name)){
-                max=users[i].getfCount();
-                recUseString=users[i].getName();
+                max = users[i].getfCount();
+                recUseString= ""+ users[i].getName();
             }
 
         }
@@ -79,12 +79,12 @@ public class Network {
     /** Computes and returns the name of the most popular user in this network: 
      *  The user who appears the most in the follow lists of all the users. */
     public String mostPopularUser() {
-        int max = 0;
+        int max = -1;
         String popular = "";
         for(int i = 0 ; i < userCount ; i++){
             if(followeeCount(users[i].getName()) > max){
                 max = followeeCount(users[i].getName()) ;
-                popular = users[i].getName();
+                popular = "" +users[i].getName();
             } 
         }
         return popular;
@@ -96,8 +96,9 @@ public class Network {
         int count =0;
         for(int i = 0 ; i < userCount ; i++){
             if(users[i].getName().equals(name) == false){
+                String [] fFollow = users[i].getfFollows();
                 for(int j = 0 ; j < users[i].getfCount() ; j++){
-                    if(users[i].getfFollows()[i].equals(name)){
+                    if(fFollow[j].equals(name)){
                         count++;
                         break;
                     }
@@ -109,9 +110,9 @@ public class Network {
 
     // Returns a textual description of all the users in this network, and who they follow.
     public String toString() {
-        String userString= "";
+        String userString= "Network:";
        for(int i = 0 ; i <  userCount ; i++){
-            userString +=   users[i].toString() + "\n";
+            userString +=  "\n" + users[i].toString()  ;
        }
        return userString;
     }
